@@ -145,6 +145,10 @@ export default function MainDash(props){
         let initial_bonds_percent = Math.round((initial_bonds / total) * 100);
         let initial_stocks_percent = Math.round((initial_stocks / total) * 100);
 
+        let future_dates = [...data["future_dates"]];
+        future_dates.shift();
+        let past_dates = [...data["dates"]];
+        let complete_dates = [...past_dates, ...future_dates];
 
         // Convert integer initial_cash to string with commas:
         let initial_cash_string = initial_cash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -152,7 +156,7 @@ export default function MainDash(props){
         let initial_stocks_string = initial_stocks.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
         // Modify cards data and set it:
-        let newCardsData = cardsData;
+        let newCardsData = [...cardsData];
         newCardsData[0].value = initial_cash_string;
         newCardsData[1].value = initial_bonds_string;
         newCardsData[2].value = initial_stocks_string;
@@ -161,27 +165,48 @@ export default function MainDash(props){
         newCardsData[1].barValue = initial_bonds_percent;
         newCardsData[2].barValue = initial_stocks_percent;
 
-        newCardsData[0].xaxis.categories = data["dates"];
-        newCardsData[1].xaxis.categories = data["dates"];
-        newCardsData[2].xaxis.categories = data["dates"];
+        newCardsData[0].xaxis.categories = complete_dates;
+        newCardsData[1].xaxis.categories = complete_dates;
+        newCardsData[2].xaxis.categories = complete_dates;
 
-        newCardsData[0].series[0].data = props.props["cash_value"];
-        newCardsData[1].series[0].data = props.props["tbills_value"];
-        newCardsData[2].series[0].data = props.props["stocks_value"];
+        let cash_future = [...data["cash_future"]];
+        cash_future.shift();
+        let tbills_future = [...data["treasury_future"]];
+        tbills_future.shift();
+        let stocks_future_top = [...data["stocks_future_top_68"]];
+        stocks_future_top.shift();
+        let stocks_future_bottom = [...data["stocks_future_bottom_68"]];
+        stocks_future_bottom.shift();
+
+        // Combine stock_future_top and stocks_value
+        stocks_future_top = [...data["stocks_value"], ...stocks_future_top];
+        stocks_future_bottom = [...data["stocks_value"], ...stocks_future_bottom];
+        tbills_future = [...data["tbills_value"], ...tbills_future];
+        console.log(stocks_future_top);
+        cash_future = [...data["cash_value"], ...cash_future];
+
+
+
+
+        newCardsData[0].series = [];
+        newCardsData[1].series = [];
+        newCardsData[2].series = [];
+
+        newCardsData[0].series.push({name: "Value", data: cash_future});
+        newCardsData[1].series.push({name: "Value", data: tbills_future});
+        newCardsData[2].series.push({name: "Top", data: stocks_future_top});
+        newCardsData[2].series.push({name: "Bottom", data: stocks_future_bottom});
 
 
         setCardsData([...newCardsData]);
 
         let newPortfolioData = {...portfolioData};
 
-        let future_dates = [...data["future_dates"]];
+
         let future_portfolio_value_bottom_68 = [...data["future_portfolio_value_bottom_68"]];
         let future_portfolio_value_top_68 = [...data["future_portfolio_value_top_68"]];
-        future_dates.shift();
         future_portfolio_value_bottom_68.shift();
         future_portfolio_value_top_68.shift();
-        let past_dates = [...data["dates"]];
-        let complete_dates = [...past_dates, ...future_dates];
         let complete_portfolio_value_bottom_68 = [...data["portfolio_value"], ...future_portfolio_value_bottom_68];
         let complete_portfolio_value_top_68 = [...data["portfolio_value"], ...future_portfolio_value_top_68];
         newPortfolioData.xaxis.categories = complete_dates;
