@@ -59,7 +59,6 @@ export default function BasicTable({param}) {
 
       fill: {
         colors: ["#fff"],
-        type: "gradient",
       },
       dataLabels: {
         enabled: false,
@@ -90,7 +89,7 @@ export default function BasicTable({param}) {
       <div className="Table">
       <h3>Portfolio Value</h3>
         <div className="chartContainer">
-          <Chart key={series} options={data.options} series={param.series} type="area" />
+          <Chart key={series} options={data.options} series={param.series} type="line" />
         </div>
 
 
