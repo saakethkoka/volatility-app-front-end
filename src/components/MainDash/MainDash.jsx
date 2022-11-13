@@ -129,6 +129,16 @@ export default function MainDash(props){
         newCardsData[1].barValue = initial_bonds_percent;
         newCardsData[2].barValue = initial_stocks_percent;
 
+
+        newCardsData[0].xaxis.categories = data["dates"];
+        newCardsData[1].xaxis.categories = data["dates"];
+        newCardsData[2].xaxis.categories = data["dates"];
+
+        newCardsData[0].series[0].data = props.props["cash_value"];
+        newCardsData[1].series[0].data = props.props["tbills_value"];
+        newCardsData[2].series[0].data = props.props["stocks_value"];
+
+
         setCardsData([...newCardsData]);
 
     }, [props.props]);

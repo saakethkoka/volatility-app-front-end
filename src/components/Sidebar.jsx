@@ -6,10 +6,11 @@ import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import { Grid, Paper, Avatar, TextField, Button } from '@mui/material/'
+import {get_data} from "../api";
 
 
 
-const Sidebar = () => {
+function Sidebar(props){
 
   let [cash, setCash] = useState("");
   let [bonds, setBonds] = useState("");
@@ -21,9 +22,15 @@ const Sidebar = () => {
   });
 
   const handleSubmit = (e) => {
-     console.log('Cash: ',cash);
-     console.log('Bonds: ',bonds);
-     console.log('Stocks: ',stocks);
+      // cast integer to cash:
+      get_data(parseInt(cash), parseInt(bonds), parseInt(stocks)).then(
+          new_data => {
+              props.props(new_data);
+              setCash("");
+              setBonds("");
+              setStocks("");
+          }
+      );
   }
 
   const formStyle = {padding: 20, height: '50vh', width: 290, margin: "20px auto"}
