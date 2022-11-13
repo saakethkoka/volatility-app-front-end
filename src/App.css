@@ -34,7 +34,8 @@
   background: var(--glass);
   border-radius: 2rem;
   gap: 16px;
-  grid-template-columns: 11rem auto 20rem;
+  padding-right: 8rem;
+  grid-template-columns: 30rem auto;
   overflow: hidden;
 }
 
