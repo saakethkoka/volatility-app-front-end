@@ -6,6 +6,7 @@ import Card from "../Card/Card";
 
 export default function Cards(props){
 
+
   return (
     <div className="Cards">
       {props.props.map((card, id) => {
@@ -16,6 +17,7 @@ export default function Cards(props){
               color={card.color}
               barValue={card.barValue}
               value={card.value}
+              xaxis={card.xaxis}
               png={card.png}
               series={card.series}
             />

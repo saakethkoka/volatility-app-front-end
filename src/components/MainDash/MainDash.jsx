@@ -14,9 +14,21 @@ const firstCardsData = [
         barValue: 0,
         value: "0",
         png: UilUsdSquare,
+        xaxis: {
+            type: "datetime",
+            categories: [
+                "2018-09-19",
+                "2018-09-20",
+                "2018-09-21",
+                "2018-09-22",
+                "2018-09-23",
+                "2018-09-24",
+                "2018-09-25",
+            ],
+        },
         series: [
             {
-                name: "Sales",
+                name: "Value",
                 data: [31, 40, 28, 51, 42, 109, 100],
             },
         ],
@@ -30,9 +42,21 @@ const firstCardsData = [
         barValue: 0,
         value: "0",
         png: UilMoneyWithdrawal,
+        xaxis: {
+            type: "datetime",
+            categories: [
+                "2018-09-19",
+                "2018-09-20",
+                "2018-09-21",
+                "2018-09-22",
+                "2018-09-23",
+                "2018-09-24",
+                "2018-09-25",
+            ],
+        },
         series: [
             {
-                name: "Revenue",
+                name: "Value",
                 data: [10, 100, 50, 70, 80, 30, 40],
             },
         ],
@@ -47,9 +71,21 @@ const firstCardsData = [
         barValue: 0,
         value: "0",
         png: UilClipboardAlt,
+        xaxis: {
+            type: "datetime",
+            categories: [
+                "2018-09-19",
+                "2018-09-20",
+                "2018-09-21",
+                "2018-09-22",
+                "2018-09-23",
+                "2018-09-24",
+                "2018-09-25",
+            ],
+        },
         series: [
             {
-                name: "Expenses",
+                name: "Value",
                 data: [10, 25, 15, 30, 12, 15, 20],
             },
         ],

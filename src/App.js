@@ -10,7 +10,7 @@ function App() {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        get_data(3000, 2000, 1000).then(
+        get_data(30000, 2000, 1000).then(
             new_data => {
                 setData(new_data);
             }
