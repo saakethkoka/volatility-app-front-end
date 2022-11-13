@@ -225,15 +225,6 @@ export default function MainDash(props){
   return (
     <div className="MainDash">
       <h1>Dashboard</h1>
-        <FormGroup>
-            <FormControlLabel control={<Switch onChange={
-                () => {
-                    setFuture(!future);
-                }
-            }
-                                               value={future}
-            />} label="Future Returns" />
-        </FormGroup>
       <Cards props={cardsData}/>
       <Table param={portfolioData}/>
     </div>
