@@ -89,14 +89,44 @@ const firstCardsData = [
                 data: [10, 25, 15, 30, 12, 15, 20],
             },
         ],
-    },
+    }
 ];
+const firstPortfolioData = {
+        title: "Portfolio Value",
+        color: {
+            backGround:
+                "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
+            boxShadow: "0px 10px 20px 0px #F9D59B",
+        },
+        barValue: 0,
+        value: "0",
+        png: UilClipboardAlt,
+        xaxis: {
+            type: "datetime",
+            categories: [
+                "2018-09-19",
+                "2018-09-20",
+                "2018-09-21",
+                "2018-09-22",
+                "2018-09-23",
+                "2018-09-24",
+                "2018-09-25",
+            ],
+        },
+        series: [
+            {
+                name: "Value",
+                data: [10, 25, 15, 30, 12, 15, 20],
+            },
+        ],
+};
 
 export default function MainDash(props){
 
     let data = props.props;
 
     const [cardsData, setCardsData] = React.useState(firstCardsData);
+    const [portfolioData, setPortfolioData] = React.useState(firstPortfolioData);
 
     React.useEffect(() => {
         if (Object.keys(data).length === 0) {
@@ -141,13 +171,18 @@ export default function MainDash(props){
 
         setCardsData([...newCardsData]);
 
+        let newPortfolioData = {...portfolioData};
+        newPortfolioData.xaxis.categories = data["dates"];
+        newPortfolioData.series[0].data = props.props["portfolio_value"];
+        setPortfolioData({...newPortfolioData});
+
     }, [props.props]);
 
   return (
     <div className="MainDash">
       <h1>Dashboard</h1>
       <Cards props={cardsData}/>
-      <Table />
+      <Table param={portfolioData}/>
     </div>
   );
 };
