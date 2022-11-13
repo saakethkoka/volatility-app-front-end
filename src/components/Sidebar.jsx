@@ -1,15 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 import Logo from "../imgs/logo.png";
 import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
+import { Grid, Paper, Avatar, TextField, Button } from '@mui/material/'
+
+
 
 const Sidebar = () => {
+
+  let [cash, setCash] = useState("");
+  let [bonds, setBonds] = useState("");
+  let [stocks, setStocks] = useState("");
+  let [error, setError] = useState(false);
+
+  useEffect(() => {
+
+  });
+
+  const handleSubmit = (e) => {
+     console.log('Cash: ',cash);
+     console.log('Bonds: ',bonds);
+     console.log('Stocks: ',stocks);
+  }
+
+  const formStyle = {padding: 20, height: '50vh', width: 290, margin: "20px auto"}
+  const textStyle = {margin: "10px auto"}
+
+
+
   const [selected, setSelected] = useState(0);
 
   const [expanded, setExpaned] = useState(true)
+
+  //const [cash, setCash] = useState(0);
 
   const sidebarVariants = {
     true: {
@@ -32,29 +58,50 @@ const Sidebar = () => {
       {/* logo */}
       <div className="logo">
         <img src={Logo} alt="logo" />
-        <span>
-          Sh<span>o</span>ps
+        <span className="logoFont">
+          N<span>I</span>LE
         </span>
       </div>
 
-      <div className="menu">
-        {SidebarData.map((item, index) => {
-          return (
-            <div
-              className={selected === index ? "menuItem active" : "menuItem"}
-              key={index}
-              onClick={() => setSelected(index)}
-            >
-              <item.icon />
-              <span>{item.heading}</span>
-            </div>
-          );
-        })}
-        {/* signoutIcon */}
-        <div className="menuItem">
-          <UilSignOutAlt />
-        </div>
+      <div className="UserForm" style={formStyle}>
+        <h5 className="FormDesc">Provide Your Desired Portfolio Allocation For Each Type of Investment:</h5>
+                <TextField
+                    label = "Cash"
+                    value={cash}
+                    error={error}
+                    fullWidth required
+                    onChange={ e => setCash(e.target.value) }
+                    style = {textStyle}
+                />
+                <TextField
+                    label = "Treasury Bonds"
+                    value={bonds}
+                    error={error}
+                    fullWidth required
+                    onChange={ e => setBonds(e.target.value) }
+                    style = {textStyle}
+                />
+                <TextField
+                    label = "Stocks"
+                    value={stocks}
+                    error={error}
+                    fullWidth required
+                    onChange={ e => setStocks(e.target.value) }
+                    style = {textStyle}
+                />
+                
+                <Button
+                    type = "submit"
+                    color = "primary"
+                    variant='contained'
+                    fullWidth
+                    onClick={e => handleSubmit(e)}
+                >
+                    Analyse Risk
+                </Button>
       </div>
+
+      
     </motion.div>
     </>
   );
