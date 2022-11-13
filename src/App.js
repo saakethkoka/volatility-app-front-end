@@ -7,12 +7,11 @@ import {useState, useEffect} from "react";
 
 function App() {
 
-    let [data, setData] = useState({});
+    const [data, setData] = useState({});
 
     useEffect(() => {
-        get_data(1000, 1000, 1000).then(
+        get_data(3000, 2000, 1000).then(
             new_data => {
-                console.log(new_data);
                 setData(new_data);
             }
         );

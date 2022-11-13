@@ -66,9 +66,17 @@ export default function MainDash(props){
         if (Object.keys(data).length === 0) {
             return;
         }
-        let initial_cash = Math.round(data["cash_value"][0]);
-        let initial_bonds = Math.round(data["tbills_value"][0]);
-        let initial_stocks = Math.round(data["stocks_value"][0]);
+        let initial_cash = Math.round(props.props["cash_value"][0]);
+        let initial_bonds = Math.round(props.props["tbills_value"][0]);
+        let initial_stocks = Math.round(props.props["stocks_value"][0]);
+
+        // Calculate the percentage of each asset allocation:
+
+        let total = initial_cash + initial_bonds + initial_stocks;
+        let initial_cash_percent = Math.round((initial_cash / total) * 100);
+        let initial_bonds_percent = Math.round((initial_bonds / total) * 100);
+        let initial_stocks_percent = Math.round((initial_stocks / total) * 100);
+
 
         // Convert integer initial_cash to string with commas:
         let initial_cash_string = initial_cash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -81,9 +89,13 @@ export default function MainDash(props){
         newCardsData[1].value = initial_bonds_string;
         newCardsData[2].value = initial_stocks_string;
 
-        setCardsData(newCardsData);
+        newCardsData[0].barValue = initial_cash_percent;
+        newCardsData[1].barValue = initial_bonds_percent;
+        newCardsData[2].barValue = initial_stocks_percent;
 
-    });
+        setCardsData([...newCardsData]);
+
+    }, [props.props]);
 
   return (
     <div className="MainDash">
