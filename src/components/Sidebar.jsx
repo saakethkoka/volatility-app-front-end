@@ -64,9 +64,9 @@ function Sidebar(props){
     >
       {/* logo */}
       <div className="logo">
-        <img src={Logo} alt="logo" />
+        {/*<img src={Logo} alt="logo" />*/}
         <span className="logoFont">
-          N<span>I</span>LE
+          {/*N<span>I</span>LE*/}
         </span>
       </div>
 
