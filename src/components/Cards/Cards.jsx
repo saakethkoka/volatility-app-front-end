@@ -6,11 +6,10 @@ import Card from "../Card/Card";
 
 export default function Cards(props){
 
-  let cards = props.props;
 
   return (
     <div className="Cards">
-      {cards.map((card, id) => {
+      {props.props.map((card, id) => {
         return (
           <div className="parentContainer" key={id}>
             <Card
