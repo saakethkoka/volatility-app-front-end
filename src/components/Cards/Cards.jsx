@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Cards.css";
 import { cardsData } from "../../Data/Data";
 
 import Card from "../Card/Card";
 
-const Cards = () => {
+export default function Cards(props){
+
+  let cards = props.props;
+
   return (
     <div className="Cards">
-      {cardsData.map((card, id) => {
+      {cards.map((card, id) => {
         return (
           <div className="parentContainer" key={id}>
             <Card
@@ -25,4 +28,3 @@ const Cards = () => {
   );
 };
 
-export default Cards;
