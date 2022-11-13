@@ -145,6 +145,7 @@ export default function MainDash(props){
         let initial_bonds_percent = Math.round((initial_bonds / total) * 100);
         let initial_stocks_percent = Math.round((initial_stocks / total) * 100);
 
+
         // Convert integer initial_cash to string with commas:
         let initial_cash_string = initial_cash.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         let initial_bonds_string = initial_bonds.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -156,49 +157,42 @@ export default function MainDash(props){
         newCardsData[1].value = initial_bonds_string;
         newCardsData[2].value = initial_stocks_string;
 
+        newCardsData[0].barValue = initial_cash_percent;
+        newCardsData[1].barValue = initial_bonds_percent;
+        newCardsData[2].barValue = initial_stocks_percent;
 
-        if(future){
-            newCardsData[0].barValue = initial_cash_percent;
-            newCardsData[1].barValue = initial_bonds_percent;
-            newCardsData[2].barValue = initial_stocks_percent;
+        newCardsData[0].xaxis.categories = data["dates"];
+        newCardsData[1].xaxis.categories = data["dates"];
+        newCardsData[2].xaxis.categories = data["dates"];
 
-
-            newCardsData[0].xaxis.categories = data["future_dates"];
-            newCardsData[1].xaxis.categories = data["future_dates"];
-            newCardsData[2].xaxis.categories = data["future_dates"];
-
-            newCardsData[0].series[0].data = props.props["cash_value"];
-            newCardsData[1].series[0].data = props.props["tbills_value"];
-            newCardsData[2].series[0].data = props.props["stocks_value"];
+        newCardsData[0].series[0].data = props.props["cash_value"];
+        newCardsData[1].series[0].data = props.props["tbills_value"];
+        newCardsData[2].series[0].data = props.props["stocks_value"];
 
 
-            setCardsData([...newCardsData]);
+        setCardsData([...newCardsData]);
 
-            let newPortfolioData = {...firstPortfolioData};
-            newPortfolioData.xaxis.categories = data["future_dates"];
-            newPortfolioData.series = []
-            newPortfolioData.series.push({name: "Bottom 68% Interval", data: props.props["future_portfolio_value_bottom_68"]});
-            newPortfolioData.series.push({name: "Top 68% Interval", data: props.props["future_portfolio_value_top_68"]});
-            setPortfolioData({...newPortfolioData});
-        }
-        else{
-            newCardsData[0].xaxis.categories = data["dates"];
-            newCardsData[1].xaxis.categories = data["dates"];
-            newCardsData[2].xaxis.categories = data["dates"];
+        let newPortfolioData = {...portfolioData};
 
-            newCardsData[0].series[0].data = props.props["cash_value"];
-            newCardsData[1].series[0].data = props.props["tbills_value"];
-            newCardsData[2].series[0].data = props.props["stocks_value"];
-
-
-            setCardsData([...newCardsData]);
-
-            let newPortfolioData = {...portfolioData};
-            newPortfolioData.xaxis.categories = data["dates"];
-            newPortfolioData.series = []
-            newPortfolioData.series.push({name: "Portfolio Value", data: props.props["portfolio_value"]});
-            setPortfolioData({...newPortfolioData});
-        }
+        let future_dates = [...data["future_dates"]];
+        let future_portfolio_value_bottom_68 = [...data["future_portfolio_value_bottom_68"]];
+        let future_portfolio_value_top_68 = [...data["future_portfolio_value_top_68"]];
+        future_dates.shift();
+        future_portfolio_value_bottom_68.shift();
+        future_portfolio_value_top_68.shift();
+        let past_dates = [...data["dates"]];
+        let complete_dates = [...past_dates, ...future_dates];
+        let complete_portfolio_value_bottom_68 = [...data["portfolio_value"], ...future_portfolio_value_bottom_68];
+        let complete_portfolio_value_top_68 = [...data["portfolio_value"], ...future_portfolio_value_top_68];
+        newPortfolioData.xaxis.categories = complete_dates;
+        newPortfolioData.series = []
+        newPortfolioData.series.push({
+            name: "Top 68%", data: complete_portfolio_value_top_68
+        });
+        newPortfolioData.series.push({
+            name: "Bottom 68%", data: complete_portfolio_value_bottom_68
+        });
+        setPortfolioData({...newPortfolioData});
 
 
     }, [props.props, future]);
