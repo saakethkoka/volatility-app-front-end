@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base_url = "https://k6ijqv2sr8.execute-api.us-east-2.amazonaws.com/prod/";
+const base_url = "https://aenqpyqnil.execute-api.us-east-2.amazonaws.com/testing_terraform_api_dev/";
 
 export const get_data = (cash, tbills, stonks) => new Promise((resolve, reject) => {
     const data = {

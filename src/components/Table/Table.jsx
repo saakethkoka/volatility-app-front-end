@@ -65,7 +65,7 @@ export default function BasicTable({param}) {
       },
       stroke: {
         curve: "smooth",
-        colors: ["white"],
+        colors: ["black"],
       },
       tooltip: {
         x: {
